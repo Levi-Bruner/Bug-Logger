@@ -7,16 +7,16 @@ class BugsService {
   async deleteNoteByBugId(id) {
     return await _repository.findByIdAndDelete(id);
   }
-  async closeBug(id, update) {
-    let bug = await _repository.findById(id);
-    if (bug["closed"] == false) {
-      bug["closed"] = true
-    }
-    return "Closed bug."
+  async closeBug(id) {
+    return await _repository.findByIdAndUpdate(id, { closed: true });
   }
   async update(id, update) {
     let bug = _repository.findById(id);
-    return await _repository.findByIdAndUpdate(id, update, { new: true })
+    //FIXME you can use a findone and filter by more than one property
+    if (bug["closed"] = false) {
+      return await _repository.findByIdAndUpdate(id, update, { new: true })
+    }
+    // throw new Error("Cannot edit a closed bug.");
   }
   async findById(id) {
     return await _repository.findById(id);
